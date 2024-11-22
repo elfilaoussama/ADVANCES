@@ -8,7 +8,7 @@ class PROCESSING:
     def process_detections(self, scores, boxes, depth_map, detr):
         self.data = pd.DataFrame(columns=['xmin','ymin','xmax','ymax','width', 'height',
                                         'depth_mean_trim','depth_mean','depth_median', 
-                                        'class', 'rgb'])
+                                        'class', 'class_o', 'rgb'])
         
         boxes_array = np.array([[int(box[1]), int(box[0]), int(box[3]), int(box[2])] 
                                for box in boxes.tolist()], dtype=np.int32)
@@ -23,6 +23,7 @@ class PROCESSING:
             
             detected_class = p.argmax()
             class_label = detr.CLASSES[detected_class]
+            class_label_o = class_label
             
             # Map classes
             if class_label == 'motorcycle':
@@ -43,7 +44,7 @@ class PROCESSING:
                 
                 new_row = pd.DataFrame([[xmin, ymin, xmax, ymax, xmax - xmin, ymax - ymin,
                                        (depth_trim_low + depth_trim_high) / 2,
-                                       depth_mean, depth_median, class_label, rgb]], 
+                                       depth_mean, depth_median, class_label, class_label_o, rgb]], 
                                      columns=self.data.columns)
                 self.data = pd.concat([self.data, new_row], ignore_index=True)
         

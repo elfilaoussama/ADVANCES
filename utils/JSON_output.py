@@ -21,7 +21,7 @@ def generate_output_json(data, ZlocE, scaler):
         
         # Create object info dictionary
         object_info = {
-            "class": row["class"],  # Object class (e.g., 'car', 'truck')
+            "class": row["class_o"],  # Object class (e.g., 'car', 'truck')
             "distance_estimated": float(distance),  # Convert distance to float (if necessary)
             "features": {
                 "xmin": float(row["xmin"]),  # Bounding box xmin

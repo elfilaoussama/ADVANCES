@@ -101,6 +101,8 @@ async def websocket_endpoint(websocket: WebSocket):
                 # Process bounding boxes and overlap them with depth map
                 pdata = processing.process_detections(scores, boxes, depth_map, detr)
 
+                print(pdata)
+
                 # Generate the output JSON
                 output_json = generate_output_json(pdata, zlocE, scaler)
 
